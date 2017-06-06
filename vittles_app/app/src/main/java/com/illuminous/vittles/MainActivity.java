@@ -199,14 +199,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void chooseWinner() {
-        Random rand = new Random();
-        winnerIndex = rand.nextInt(winners.size());
-        display(winnerIndex, winners);
-        mWinner.setVisibility(View.VISIBLE);
-        mEww.setVisibility(View.GONE);
-        mForkYeah.setVisibility(View.GONE);
-        mTryAgain.setVisibility(View.VISIBLE);
-        mStartNewVote.setVisibility(View.VISIBLE);
+        if (winners.size()<1){
+            startActivity(new Intent(this, FilterActivity.class));
+            finish();
+        } else {
+            Random rand = new Random();
+            winnerIndex = rand.nextInt(winners.size());
+            display(winnerIndex, winners);
+            mWinner.setVisibility(View.VISIBLE);
+            mEww.setVisibility(View.GONE);
+            mForkYeah.setVisibility(View.GONE);
+            mTryAgain.setVisibility(View.VISIBLE);
+            mStartNewVote.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
