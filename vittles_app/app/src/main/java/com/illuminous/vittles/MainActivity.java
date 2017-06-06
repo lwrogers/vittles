@@ -52,10 +52,21 @@ public class MainActivity extends AppCompatActivity {
     TextView mWinner;
     Button mForkYeah;
     Button mEww;
+    Button mTryAgain;
+    Button mStartNewVote;
     int businessIndex = 0;
-    int[] votes;
+    int winnerIndex;
     ArrayList<Business> businesses;
     ArrayList<Business> winners;
+
+    //round function from stack overflow
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,32 +84,31 @@ public class MainActivity extends AppCompatActivity {
         mWinner = (TextView) findViewById(R.id.rest_winner);
         mForkYeah = (Button) findViewById(R.id.button_fork_yeah);
         mEww = (Button) findViewById(R.id.button_eww);
+        mTryAgain = (Button) findViewById(R.id.try_again);
+        mStartNewVote = (Button) findViewById(R.id.start_new_vote);
 
-            apiFactory = new YelpFusionApiFactory();
-            try {
-                Map<String, String> params = new HashMap<>();
-                YelpFusionApi yelpFusionApi = apiFactory.createAPI("0x2eOuAzs_QARDOGy6UFpw", "lCQaEU3PrlJcCkWS3HS4QHREdRZSY9I6TleyVwFhwV3tf5kW154TSR3CYZSF2qVI");
-                params.put("term", "Asian food");
-                params.put("latitude", "36.999848");
-                params.put("longitude", "-122.062926");
-                Call<SearchResponse> call= yelpFusionApi.getBusinessSearch(params);
-                SearchResponse searchResponse = call.execute().body();
+        apiFactory = new YelpFusionApiFactory();
+        try {
+            Map<String, String> params = new HashMap<>();
+            YelpFusionApi yelpFusionApi = apiFactory.createAPI("0x2eOuAzs_QARDOGy6UFpw", "lCQaEU3PrlJcCkWS3HS4QHREdRZSY9I6TleyVwFhwV3tf5kW154TSR3CYZSF2qVI");
+            params.put("term", "Asian food");
+            params.put("latitude", "36.999848");
+            params.put("longitude", "-122.062926");
+            Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);
+            SearchResponse searchResponse = call.execute().body();
 
-                businesses = searchResponse.getBusinesses();
-                winners = new ArrayList<>();
-                votes = new int[businesses.size()];
-                for (int i=0; i<votes.length; i++) {
-                    votes[i] = 0;
-                }
+            businesses = searchResponse.getBusinesses();
+            winners = new ArrayList<>();
 
-                Business business = businesses.get(businessIndex);
-                new DownloadImageTask((ImageView) findViewById(R.id.main_image))
-                        .execute(businesses.get(businessIndex).getImageUrl());
-                mRestName.setText(business.getName());
-                mLocation.setText(business.getLocation().getAddress1() + ", "  + business.getLocation().getCity() + ", " + business.getLocation().getState() + " " + business.getLocation().getZipCode());
-                mRating.setText(String.valueOf(business.getRating()));
-                mPrice.setText(business.getPrice());
-                mDistance.setText(String.valueOf(round((business.getDistance()/1609.34) ,2)).concat(" miles"));
+
+            Business business = businesses.get(businessIndex);
+            new DownloadImageTask((ImageView) findViewById(R.id.main_image))
+                    .execute(businesses.get(businessIndex).getImageUrl());
+            mRestName.setText(business.getName());
+            mLocation.setText(business.getLocation().getAddress1() + ", " + business.getLocation().getCity() + ", " + business.getLocation().getState() + " " + business.getLocation().getZipCode());
+            mRating.setText(String.valueOf(business.getRating()));
+            mPrice.setText(business.getPrice());
+            mDistance.setText(String.valueOf(round((business.getDistance() / 1609.34), 2)).concat(" miles"));
 
 
         } catch (IOException e) {
@@ -111,6 +121,61 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
         finish();
 
+    }
+
+    public void submitYes(View view) {
+        winners.add(businesses.get(businessIndex));
+        if (businessIndex != businesses.size() - 1) {
+            businessIndex++;
+            display(businessIndex, businesses);
+        } else {
+            chooseWinner();
+        }
+    }
+
+    public void submitNo(View view) {
+        if (businessIndex != businesses.size() - 1) {
+            businessIndex++;
+            display(businessIndex, businesses);
+        } else {
+            chooseWinner();
+        }
+
+    }
+
+    public void tryAgain(View view) {
+        if (winners.size()>1) {
+            winners.remove(winnerIndex);
+        }
+        chooseWinner();
+    }
+
+    public void startNewVote(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void display(int number, ArrayList<Business> chosenArray) {
+
+        Business business = chosenArray.get(number);
+        new DownloadImageTask((ImageView) findViewById(R.id.main_image))
+                .execute(chosenArray.get(number).getImageUrl());
+        mRestName.setText(business.getName());
+        mLocation.setText(business.getLocation().getAddress1() + ", " + business.getLocation().getCity() + ", " + business.getLocation().getState() + " " + business.getLocation().getZipCode());
+        mPrice.setText(business.getPrice());
+        mRating.setText(String.valueOf(business.getRating()));
+        mDistance.setText(String.valueOf(round((business.getDistance() / 1609.34), 2)).concat(" miles"));    //dived by 1609.34 to convert meters to miles
+    }
+
+    public void chooseWinner() {
+        Random rand = new Random();
+        winnerIndex = rand.nextInt(winners.size());
+        display(winnerIndex, winners);
+        mWinner.setVisibility(View.VISIBLE);
+        mEww.setVisibility(View.GONE);
+        mForkYeah.setVisibility(View.GONE);
+        mTryAgain.setVisibility(View.VISIBLE);
+        mStartNewVote.setVisibility(View.VISIBLE);
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -136,54 +201,5 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
-    }
-
-    public void submitYes(View view) {
-        winners.add(businesses.get(businessIndex));
-        if (businessIndex != businesses.size()-1) {
-            businessIndex++;
-            display(businessIndex);
-        } else {
-            chooseWinner();
-        }
-    }
-
-    public void submitNo(View view) {
-        if (businessIndex != businesses.size()-1) {
-            businessIndex++;
-            display(businessIndex);
-        } else {
-            chooseWinner();
-        }
-
-    }
-
-    public void display(int number) {
-
-        Business business = businesses.get(number);
-        new DownloadImageTask((ImageView) findViewById(R.id.main_image))
-                .execute(businesses.get(number).getImageUrl());
-        mRestName.setText(business.getName());
-        mLocation.setText(business.getLocation().getAddress1() + ", "  + business.getLocation().getCity() + ", " + business.getLocation().getState() + " " + business.getLocation().getZipCode());
-        mPrice.setText(business.getPrice());
-        mRating.setText(String.valueOf(business.getRating()));
-        mDistance.setText(String.valueOf(round((business.getDistance()/1609.34),2)).concat(" miles"));    //dived by 1609.34 to convert meters to miles
-    }
-    //round function from stack overflow
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
-
-    public void chooseWinner(){
-        Random rand = new Random();
-        int winnerIndex = rand.nextInt(winners.size());
-        display(winnerIndex);
-        mWinner.setVisibility(View.VISIBLE);
-        mEww.setVisibility(View.INVISIBLE);
-        mForkYeah.setVisibility(View.INVISIBLE);
     }
 }
