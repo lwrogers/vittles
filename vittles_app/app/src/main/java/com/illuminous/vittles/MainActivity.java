@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Filter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Business> businesses;
     ArrayList<Business> winners;
 
+
+
+
     //round function from stack overflow
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -90,13 +94,25 @@ public class MainActivity extends AppCompatActivity {
         mTryAgain = (Button) findViewById(R.id.try_again);
         mStartNewVote = (Button) findViewById(R.id.start_new_vote);
 
+        Bundle extras = getIntent().getExtras();
+        String kword = extras.getString("keyword");
+        String location = extras.getString("location");
+        String radius = extras.getString("radius");
+        String radiusString = "";
+        if (radius != null) {
+            int radiusInt = ((Integer.parseInt(radius))*1610);
+            radiusString = Integer.toString(radiusInt);
+        }
+
         apiFactory = new YelpFusionApiFactory();
         try {
             Map<String, String> params = new HashMap<>();
             YelpFusionApi yelpFusionApi = apiFactory.createAPI("0x2eOuAzs_QARDOGy6UFpw", "lCQaEU3PrlJcCkWS3HS4QHREdRZSY9I6TleyVwFhwV3tf5kW154TSR3CYZSF2qVI");
-            params.put("term", "Asian food");
-            params.put("latitude", "36.999848");
-            params.put("longitude", "-122.062926");
+            params.put("term", kword);
+            params.put("radius", radiusString);
+            params.put("location", location);
+           // params.put("latitude", "36.999848");
+           // params.put("longitude", "-122.062926");
             Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);
             SearchResponse searchResponse = call.execute().body();
 
@@ -154,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startNewVote(View view) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, FilterActivity.class);
         startActivity(intent);
     }
 
