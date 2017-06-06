@@ -16,39 +16,91 @@
         android:background="@drawable/round_linear">
 
         <TextView
+            android:id="@+id/rest_winner"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:text="WINNER"
+            android:textSize="32sp"
+            android:textColor="@color/green"/>
+
+        <TextView
+            android:id="@+id/rest_name"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="Burger King"
             android:textSize="32sp"
             android:layout_marginLeft="8dp"/>
 
-        <ImageView
+        <TextView
+            android:id="@+id/rest_location"
             android:layout_marginLeft="8dp"
-            android:layout_width="104dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:src="@drawable/five_stars" />
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/rest_rating"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"/>
+
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:src="@drawable/star"
+                android:layout_toEndOf="@id/rest_rating"
+                android:layout_marginTop="5dp"/>
+
+        </RelativeLayout>
+
+
 
         <TextView
-            android:id="@+id/business_display"
+            android:id="@+id/rest_price"
             android:layout_marginLeft="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="8:00AM - 8:00PM"
-            android:textSize="22sp"/>
+            android:textSize="22sp"
+            android:textColor="@color/green"/>
 
-        <ImageView
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/bk"
-            android:scaleType="centerCrop"
             android:layout_weight="6"
-            android:background="@drawable/round_image" />
+            >
+            <ImageView
+                android:id="@+id/main_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:scaleType="centerCrop"
+                android:layout_weight="6" />
+
+            <TextView
+                android:id="@+id/rest_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="16dp"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -59,6 +111,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/button_fork_yeah"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -67,9 +120,12 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:textColor="@color/white"
-            android:background="@drawable/round_button_green"/>
+            android:background="@drawable/round_button_green"
+            android:onClick="submitYes"/>
+
 
         <Button
+            android:id="@+id/button_eww"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -77,6 +133,7 @@
             android:layout_marginRight="24dp"
             android:textColor="@color/white"
             android:background="@drawable/round_button_red"
+            android:onClick="submitNo"
             />
 
     </LinearLayout>
