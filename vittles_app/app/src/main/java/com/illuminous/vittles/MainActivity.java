@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -155,11 +156,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void display(int number, ArrayList<Business> chosenArray) {
+    public void display(int number, final ArrayList<Business> chosenArray) {
 
-        Business business = chosenArray.get(number);
+        final Business business = chosenArray.get(number);
         new DownloadImageTask((ImageView) findViewById(R.id.main_image))
                 .execute(chosenArray.get(number).getImageUrl());
+
+        ImageView img = (ImageView)findViewById(R.id.main_image);
+        img.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse(business.getUrl()));
+                startActivity(intent);
+            }
+        });
         mRestName.setText(business.getName());
         mLocation.setText(business.getLocation().getAddress1() + ", " + business.getLocation().getCity() + ", " + business.getLocation().getState() + " " + business.getLocation().getZipCode());
         mPrice.setText(business.getPrice());
