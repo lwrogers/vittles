@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.illuminous.vittles.FilterActivity"
+    android:orientation="vertical"
+    android:background="@color/primary">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Filters"
+        android:textSize="50sp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/edit_keyword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="keyword"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/edit_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="location"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/edit_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="radius"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/donut"
+            android:scaleType="centerCrop"
+            android:onClick="searchFood"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Search"
+            android:textColor="@color/white"
+            android:textSize="64sp"
+            android:onClick="searchFood"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"/>
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+//This activity was taken from a post on a material log in page
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
