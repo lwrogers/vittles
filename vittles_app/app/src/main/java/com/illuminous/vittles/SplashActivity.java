@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.VideoView;
 
+//The logic in this class came from a post on stack overflow about having a movie splash screen
 public class SplashActivity extends AppCompatActivity {
 
 

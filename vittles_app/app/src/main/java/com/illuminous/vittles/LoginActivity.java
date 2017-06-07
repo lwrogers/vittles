@@ -17,7 +17,7 @@ import butterknife.InjectView;
 
 
 
-
+//This activity was taken from a post on a material log in page
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
