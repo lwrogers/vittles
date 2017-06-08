@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     Button mEww;        // button for eww
     Button mTryAgain;   // button for tryagain
     Button mStartNewVote;     // button for starting a new vote
+    Button mOtherWinners;
     int businessIndex = 0;  //initialization of the index of the businesses array to be zero
     int winnerIndex;    //declaration of the index of the array of winners
     ArrayList<Business> businesses; // an array list declaration for the businesses array list
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         mEww = (Button) findViewById(R.id.button_eww);
         mTryAgain = (Button) findViewById(R.id.try_again);
         mStartNewVote = (Button) findViewById(R.id.start_new_vote);
+       /* mOtherWinners = (Button) findViewById(R.id.);*/
 
         // preceding code here transfers the user inputed keyword, location, and radius variables from our previous filter activity
         Bundle extras = getIntent().getExtras();
