@@ -15,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -62,10 +63,12 @@ public class MainActivity extends AppCompatActivity {
     Button mTryAgain;   // button for tryagain
     Button mStartNewVote;     // button for starting a new vote
     Button mOtherWinners;
+    ListView list;
     int businessIndex = 0;  //initialization of the index of the businesses array to be zero
     int winnerIndex;    //declaration of the index of the array of winners
     ArrayList<Business> businesses; // an array list declaration for the businesses array list
     ArrayList<Business> winners;    // an array list declaration for the winners array list
+    ArrayList<Business> allWinners;
 
 
 
@@ -89,7 +92,13 @@ public class MainActivity extends AppCompatActivity {
         mEww = (Button) findViewById(R.id.button_eww);
         mTryAgain = (Button) findViewById(R.id.try_again);
         mStartNewVote = (Button) findViewById(R.id.start_new_vote);
-       /* mOtherWinners = (Button) findViewById(R.id.);*/
+        mOtherWinners = (Button) findViewById(R.id.other_winners);
+
+        //custom list adapter initialization
+      //  CustomListAdapter adapter = new CustomListAdapter(this, itemname, imgid);
+
+
+
 
         // preceding code here transfers the user inputed keyword, location, and radius variables from our previous filter activity
         Bundle extras = getIntent().getExtras();
@@ -118,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
             businesses = searchResponse.getBusinesses();    //initialize businesses array list and have it get the businesses from the search response
             winners = new ArrayList<>();    //initialize winners to be an array list
-
+            allWinners = new ArrayList<>();
 
             Business business = businesses.get(businessIndex);  //here we get our first business in the array
             new DownloadImageTask((ImageView) findViewById(R.id.main_image))    //download the image and set it in our image view
@@ -140,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     // this method is linked to the fork yeah button and adds the business to the winners array as well as advancing in the businesses array if it hasn't reached it's end. If it has we call choosewinner()
     public void submitYes(View view) {
         winners.add(businesses.get(businessIndex));
+        allWinners.add(businesses.get(businessIndex));
         if (businessIndex != businesses.size() - 1) {
             businessIndex++;
             display(businessIndex, businesses);
@@ -166,10 +176,24 @@ public class MainActivity extends AppCompatActivity {
         chooseWinner();
     }
 
+    public void otherWinners(View view){
+
+
+        displayAllWinners(allWinners.size(), allWinners);
+
+        list.setVisibility(View.VISIBLE);
+
+    }
+
     // This method simply starts a new intent to the filter activity in order to reset the vote and start over
     public void startNewVote(View view) {
         Intent intent = new Intent(this, FilterActivity.class);
         startActivity(intent);
+    }
+
+    public  void displayAllWinners(int number, final ArrayList<Business> chosenArray){
+
+
     }
 
     //this method is all about updating the screen by displaying the next restaurant and all of it's data.
@@ -207,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
             winnerIndex = rand.nextInt(winners.size());
             display(winnerIndex, winners);
             mWinner.setVisibility(View.VISIBLE);
+            mOtherWinners.setVisibility(View.VISIBLE);
             mEww.setVisibility(View.GONE);
             mForkYeah.setVisibility(View.GONE);
             mTryAgain.setVisibility(View.VISIBLE);

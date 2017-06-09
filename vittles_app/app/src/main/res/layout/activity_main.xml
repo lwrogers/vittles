@@ -7,6 +7,15 @@
     android:orientation="vertical"
     tools:context="com.illuminous.vittles.MainActivity">
 
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone" >
+    </ListView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -157,6 +166,7 @@
             android:layout_marginRight="24dp"
             android:layout_weight="1"
             android:background="@drawable/round_button_green"
+            android:onClick="otherWinners"
             android:text="Other Winers"
             android:textColor="@color/white"
             android:visibility="gone"/>
