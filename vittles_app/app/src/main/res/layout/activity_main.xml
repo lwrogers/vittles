@@ -1,189 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
-    android:orientation="vertical"
-    tools:context="com.illuminous.vittles.MainActivity">
+    android:layout_width="match_parent"
+    android:background="@color/black">
 
-    <ListView
-        android:id="@+id/list"
+    <ImageView
+        android:id="@+id/main_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:visibility="gone" >
-    </ListView>
-
+        android:layout_height="match_parent"
+        android:alpha="0.8"
+        android:scaleType="centerCrop"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="24dp"
-        android:layout_weight="4"
-        android:background="@drawable/round_linear"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.illuminous.vittles.MainActivity">
 
-        <TextView
-            android:id="@+id/rest_winner"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="WINNER"
-            android:textColor="@color/green"
-            android:textSize="32sp"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal"/>
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone" >
+        </ListView>
 
-        <TextView
-            android:id="@+id/rest_name"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:textSize="32sp" />
 
-        <TextView
-            android:id="@+id/rest_location"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_margin="24dp"
+            android:layout_weight="4"
+            android:background="@drawable/round_linear"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/rest_rating"
+                android:id="@+id/rest_winner"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="WINNER"
+                android:textColor="@color/green"
+                android:textSize="32sp"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/rest_name"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/rest_location"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/rest_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="22sp" />
+
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/rest_rating"
+                    android:src="@drawable/star" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/rest_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:textColor="@color/green"
                 android:textSize="22sp" />
 
-            <ImageView
-                android:layout_width="19dp"
-                android:layout_height="19dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@id/rest_rating"
-                android:src="@drawable/star" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/rest_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:textColor="@color/green"
-            android:textSize="22sp" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="6">
-
-            <ImageView
-                android:id="@+id/main_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="6"
-                android:scaleType="centerCrop" />
-
-            <TextView
-                android:id="@+id/rest_distance"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_height="0dp"
+                android:layout_weight="6">
+
+                <ImageView
+                    android:id="@+id/main_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="6"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/rest_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_fork_yeah"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_green"
+                android:onClick="submitYes"
+                android:text="Fork Yeah!"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/button_eww"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_red"
+                android:onClick="submitNo"
+                android:text="Eww..."
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/try_again"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_sky"
+                android:onClick="tryAgain"
+                android:text="Trey again?"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:visibility="gone" />
+            <Button
+                android:id="@+id/other_winners"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_button_green"
+                android:onClick="otherWinners"
+                android:text="Other Winers"
+                android:textColor="@color/white"
+                android:visibility="gone"/>
 
-        </RelativeLayout>
+            <Button
+                android:id="@+id/start_new_vote"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_weight="1"
+                android:onClick="startNewVote"
+                android:text="Start new vote"
+                android:background="@drawable/round_button_blue"
+                android:textColor="@color/white"
+                android:visibility="gone"/>
 
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button_fork_yeah"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_green"
-            android:onClick="submitYes"
-            android:text="Fork Yeah!"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/button_eww"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_red"
-            android:onClick="submitNo"
-            android:text="Eww..."
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/try_again"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_sky"
-            android:onClick="tryAgain"
-            android:text="Trey again?"
-            android:textColor="@color/white"
-            android:visibility="gone" />
-        <Button
-            android:id="@+id/other_winners"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_button_green"
-            android:onClick="otherWinners"
-            android:text="Other Winers"
-            android:textColor="@color/white"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/start_new_vote"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_weight="1"
-            android:onClick="startNewVote"
-            android:text="Start new vote"
-            android:background="@drawable/round_button_blue"
-            android:textColor="@color/white"
-            android:visibility="gone"/>
+        </LinearLayout>
 
     </LinearLayout>
+</FrameLayout>
 
-</LinearLayout>

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     Button mTryAgain;   // button for tryagain
     Button mStartNewVote;     // button for starting a new vote
     Button mOtherWinners;
-    ListView list;
+   /* ListView list;*/
     int businessIndex = 0;  //initialization of the index of the businesses array to be zero
     int winnerIndex;    //declaration of the index of the array of winners
     ArrayList<Business> businesses; // an array list declaration for the businesses array list
@@ -132,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
             Business business = businesses.get(businessIndex);  //here we get our first business in the array
             new DownloadImageTask((ImageView) findViewById(R.id.main_image))    //download the image and set it in our image view
                     .execute(businesses.get(businessIndex).getImageUrl());
+
+            new DownloadImageTask((ImageView) findViewById(R.id.main_background))    //download the image and set it in our image view
+                    .execute(businesses.get(businessIndex).getImageUrl());
+
             //below we fetch all the data from the business and display it in the appropriate views in the layout
             mRestName.setText(business.getName());
             mLocation.setText(business.getLocation().getAddress1() + ", " + business.getLocation().getCity() + ", " + business.getLocation().getState() + " " + business.getLocation().getZipCode());
@@ -149,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     // this method is linked to the fork yeah button and adds the business to the winners array as well as advancing in the businesses array if it hasn't reached it's end. If it has we call choosewinner()
     public void submitYes(View view) {
         winners.add(businesses.get(businessIndex));
-        allWinners.add(businesses.get(businessIndex));
+      /*  allWinners.add(businesses.get(businessIndex));*/
         if (businessIndex != businesses.size() - 1) {
             businessIndex++;
             display(businessIndex, businesses);
@@ -175,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         }
         chooseWinner();
     }
+/*
 
     public void otherWinners(View view){
 
@@ -184,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
         list.setVisibility(View.VISIBLE);
 
     }
+*/
 
     // This method simply starts a new intent to the filter activity in order to reset the vote and start over
     public void startNewVote(View view) {
@@ -191,16 +197,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public  void displayAllWinners(int number, final ArrayList<Business> chosenArray){
+ /*   public  void displayAllWinners(int number, final ArrayList<Business> chosenArray){
 
 
     }
-
+*/
     //this method is all about updating the screen by displaying the next restaurant and all of it's data.
     public void display(int number, final ArrayList<Business> chosenArray) {
 
         final Business business = chosenArray.get(number);
         new DownloadImageTask((ImageView) findViewById(R.id.main_image))
+                .execute(chosenArray.get(number).getImageUrl());
+
+        new DownloadImageTask((ImageView) findViewById(R.id.main_background))
                 .execute(chosenArray.get(number).getImageUrl());
 
         ImageView img = (ImageView) findViewById(R.id.main_image);
