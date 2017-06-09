@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
 //do not intend to allow users to skip the splash
         if(isFinishing())
             return;
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, ModeSelectionActivity.class));
         finish();
     }
 

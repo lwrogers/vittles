@@ -26,14 +26,18 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.Dark"></activity>
+            android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name=".FilterActivity"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".FilterActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
+        <activity android:name=".ModeSelectionActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
