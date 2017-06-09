@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "348202366588-sdu26idqf7joqpef6gbii293svgpmcld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.illuminous.vittles",
+            "certificate_hash": "6d7415df60befb8fa290f62d133257b22990150c"
+          }
+        },
+        {
           "client_id": "348202366588-00kjecop6hcoousl0gqcfkr7gsa5nm2i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
