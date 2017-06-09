@@ -43,6 +43,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.R.attr.buttonStyleInset;
+import static android.R.attr.radius;
 import static android.R.attr.y;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static android.media.CamcorderProfile.get;
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String kword = extras.getString("keyword");
         String location = extras.getString("location");
+        String openNow = extras.getString("openNow");
         String radius = extras.getString("radius");
         String radiusString = "";
 
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             params.put("term", kword);  //first parameter is a keyword which we transferred from the user input in filter activity
             params.put("radius", radiusString); //second is radius which we transferred from the user input in filter activity
             params.put("location", location);   //third is your location which we transferred from the user input in filter activity
+            params.put("open_now", openNow);
 
             Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);    //here we prep the call
             SearchResponse searchResponse = call.execute().body();  // generate a search response by executing the call and returning the body

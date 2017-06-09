@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,7 +16,8 @@ public class FilterActivity extends AppCompatActivity {
     EditText mKeyword;
     EditText mLocation;
     EditText mRadius;
-
+    Button mOpenNow;
+    String openNow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class FilterActivity extends AppCompatActivity {
         mKeyword = (EditText) findViewById(R.id.edit_keyword);
         mLocation = (EditText) findViewById(R.id.edit_location);
         mRadius = (EditText) findViewById(R.id.edit_radius);
+        mOpenNow = (Button) findViewById(R.id.button_open_now);
+        openNow = "true";
     }
 
     public void searchFood(View view) {
@@ -43,9 +47,23 @@ public class FilterActivity extends AppCompatActivity {
             extras.putString("keyword",keyword);
             extras.putString("location",location);
             extras.putString("radius",radius);
+            extras.putString("openNow", openNow);
             intent.putExtras(extras);
             startActivity(intent);
         }
 
+    }
+
+    public void openNowSwitch (View view) {
+        if (openNow.equals("true")) {
+            openNow = "false";
+            mOpenNow.setText("All");
+            mOpenNow.setBackground(getResources().getDrawable(R.drawable.round_button_red));
+
+        } else {
+            openNow = "true";
+            mOpenNow.setText("Open Only");
+            mOpenNow.setBackground(getResources().getDrawable(R.drawable.round_button_green));
+        }
     }
 }

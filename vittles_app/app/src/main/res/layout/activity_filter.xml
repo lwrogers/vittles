@@ -33,10 +33,12 @@
         android:hint="keyword"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:layout_below="@id/text_search_by"
         android:background="@drawable/edit_transparent"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
 
     <EditText
         android:id="@+id/edit_location"
@@ -45,10 +47,12 @@
         android:hint="location"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:layout_below="@id/edit_keyword"
         android:background="@drawable/edit_transparent"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
 
     <EditText
         android:id="@+id/edit_radius"
@@ -57,10 +61,12 @@
         android:hint="radius"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:layout_below="@id/edit_location"
         android:background="@drawable/edit_transparent"
-        android:padding="16dp"/>
+        android:padding="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
 
     <!--<Button-->
         <!--android:layout_width="wrap_content"-->
@@ -77,15 +83,28 @@
         <!--android:onClick="searchFood"/>-->
 
     <ImageView
+        android:id="@+id/button_search"
         android:layout_width="128dp"
         android:layout_height="64dp"
         android:src="@drawable/searchicon"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="32dp"
         android:padding="8dp"
         android:background="@drawable/button_search_transparent"
         android:onClick="searchFood"/>
+
+    <Button
+        android:id="@+id/button_open_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button_green"
+        android:text="Open Only"
+        android:layout_below="@id/edit_radius"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="8dp"
+        android:onClick="openNowSwitch"/>
 
 
 
