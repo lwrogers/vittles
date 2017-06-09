@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.illuminous.vittles.FilterActivity"
     android:orientation="vertical"
-    android:background="@color/primary">
+    android:background="@color/black">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/rest2"
+        android:scaleType="centerCrop" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/text_search_by"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
         android:text="Search By: "
         android:textSize="50sp"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/white"/>
+        android:layout_marginTop="48dp"
+        android:textColor="@color/white"
+        android:fontFamily="cursive"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/edit_keyword"
@@ -23,7 +33,10 @@
         android:hint="keyword"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="64dp"
+        android:layout_below="@id/text_search_by"
+        android:background="@drawable/edit_transparent"
+        android:padding="16dp" />
 
     <EditText
         android:id="@+id/edit_location"
@@ -32,7 +45,10 @@
         android:hint="location"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="48dp"
+        android:layout_below="@id/edit_keyword"
+        android:background="@drawable/edit_transparent"
+        android:padding="16dp" />
 
     <EditText
         android:id="@+id/edit_radius"
@@ -41,28 +57,35 @@
         android:hint="radius"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="48dp"
+        android:layout_below="@id/edit_location"
+        android:background="@drawable/edit_transparent"
+        android:padding="16dp"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/donut"
-            android:scaleType="centerCrop"
-            android:onClick="searchFood"/>
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@drawable/button_search_transparent"-->
+        <!--android:text="search"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="64dp"-->
+        <!--android:textSize="32sp"-->
+        <!--android:padding="8dp"-->
+        <!--android:onClick="searchFood"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Search"
-            android:textColor="@color/white"
-            android:textSize="64sp"
-            android:onClick="searchFood"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical"/>
-    </FrameLayout>
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="64dp"
+        android:src="@drawable/searchicon"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
+        android:padding="8dp"
+        android:background="@drawable/button_search_transparent" />
 
 
-</LinearLayout>
+
+</RelativeLayout>

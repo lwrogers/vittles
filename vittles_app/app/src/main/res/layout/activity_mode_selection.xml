@@ -13,12 +13,16 @@
         android:scaleType="centerCrop"
         android:paddingStart="320dp"/>
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/cursive"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="48dp"
+        android:layout_centerHorizontal="true"
+        android:text="Vittles"
+        android:textColor="@color/white"
+        android:textSize="104dp"
+        android:fontFamily="cursive"
+        android:layout_marginTop="64dp"
         android:layout_marginBottom="64dp"/>
 
     <Button
@@ -31,7 +35,9 @@
         android:layout_centerVertical="true"
         android:background="@drawable/round_button_transparent"
         android:textColor="@color/white"
-        android:padding="24dp"/>
+        android:padding="24dp"
+        android:fontFamily="cursive"
+        android:textAllCaps="false"/>
 
     <Button
         android:id="@+id/button_loner"
@@ -45,6 +51,8 @@
         android:textColor="@color/white"
         android:padding="24dp"
         android:layout_marginTop="48dp"
-        android:onClick="lonerSelection"/>
+        android:onClick="lonerSelection"
+        android:fontFamily="cursive"
+        android:textAllCaps="false"/>
 
 </RelativeLayout>

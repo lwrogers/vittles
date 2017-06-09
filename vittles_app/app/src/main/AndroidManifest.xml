@@ -32,9 +32,9 @@
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".FilterActivity"
-            android:theme="@style/Theme.Design.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity android:name=".ModeSelectionActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
