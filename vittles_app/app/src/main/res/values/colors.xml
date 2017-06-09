@@ -19,4 +19,5 @@
     <color name="green">#5cb85c</color>
     <color name="sky">#5bc0de</color>
     <color name="blue">#428bca</color>
+    <color name="warning">#ED9C28</color>
 </resources>

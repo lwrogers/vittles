@@ -58,12 +58,14 @@ public class FilterActivity extends AppCompatActivity {
         if (openNow.equals("true")) {
             openNow = "false";
             mOpenNow.setText("All");
-            mOpenNow.setBackground(getResources().getDrawable(R.drawable.round_button_red));
+            mOpenNow.setTextColor(getResources().getColor(R.color.warning));
+            mOpenNow.setBackground(getResources().getDrawable(R.drawable.orange_transparent));
 
         } else {
             openNow = "true";
-            mOpenNow.setText("Open Only");
-            mOpenNow.setBackground(getResources().getDrawable(R.drawable.round_button_green));
+            mOpenNow.setText("Open Now");
+            mOpenNow.setTextColor(getResources().getColor(R.color.green));
+            mOpenNow.setBackground(getResources().getDrawable(R.drawable.green_transparent));
         }
     }
 }
