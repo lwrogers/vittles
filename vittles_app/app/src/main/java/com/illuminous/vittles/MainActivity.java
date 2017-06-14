@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -48,11 +50,14 @@ import static android.R.attr.y;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static android.media.CamcorderProfile.get;
 import static android.text.TextUtils.concat;
+import static com.illuminous.vittles.R.id.rating_star;
+import static com.illuminous.vittles.R.id.rest_winner;
 
 
-public class MainActivity extends AppCompatActivity {
+ public class MainActivity extends AppCompatActivity {
     YelpFusionApiFactory apiFactory;    //yelp api github class
     ImageView mimage;   //declaration of the restaurant image view
+     ImageView mRatingStar;
     TextView mRestName; //declaration of restaurant name text view
     TextView mPrice;    //restaurant price text view
     TextView mRating;   //restaurant rating text view
@@ -64,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     Button mTryAgain;   // button for tryagain
     Button mStartNewVote;     // button for starting a new vote
     Button mOtherWinners;
-   /* ListView list;*/
+    ListView list;
     int businessIndex = 0;  //initialization of the index of the businesses array to be zero
     int winnerIndex;    //declaration of the index of the array of winners
     ArrayList<Business> businesses; // an array list declaration for the businesses array list
@@ -88,15 +93,15 @@ public class MainActivity extends AppCompatActivity {
         mimage = (ImageView) findViewById(R.id.main_image);
         mDistance = (TextView) findViewById(R.id.rest_distance);
         mLocation = (TextView) findViewById(R.id.rest_location);
-        mWinner = (TextView) findViewById(R.id.rest_winner);
+        mWinner = (TextView) findViewById(rest_winner);
         mForkYeah = (Button) findViewById(R.id.button_fork_yeah);
         mEww = (Button) findViewById(R.id.button_eww);
         mTryAgain = (Button) findViewById(R.id.try_again);
         mStartNewVote = (Button) findViewById(R.id.start_new_vote);
         mOtherWinners = (Button) findViewById(R.id.other_winners);
+        mRatingStar = (ImageView) findViewById(R.id.rating_star);
+        list=(ListView)findViewById(R.id.list);
 
-        //custom list adapter initialization
-      //  CustomListAdapter adapter = new CustomListAdapter(this, itemname, imgid);
 
 
 
@@ -156,11 +161,12 @@ public class MainActivity extends AppCompatActivity {
     // this method is linked to the fork yeah button and adds the business to the winners array as well as advancing in the businesses array if it hasn't reached it's end. If it has we call choosewinner()
     public void submitYes(View view) {
         winners.add(businesses.get(businessIndex));
-      /*  allWinners.add(businesses.get(businessIndex));*/
+        allWinners.add(businesses.get(businessIndex));
         if (businessIndex != businesses.size() - 1) {
             businessIndex++;
             display(businessIndex, businesses);
         } else {
+
             chooseWinner();
         }
     }
@@ -182,17 +188,16 @@ public class MainActivity extends AppCompatActivity {
         }
         chooseWinner();
     }
-/*
 
     public void otherWinners(View view){
+        Log.v("button", "button was pressed");
+        Log.v("All Winners: ", String.valueOf(allWinners.size()));
 
 
-        displayAllWinners(allWinners.size(), allWinners);
 
-        list.setVisibility(View.VISIBLE);
 
+        displayAllWinners();
     }
-*/
 
     // This method simply starts a new intent to the filter activity in order to reset the vote and start over
     public void startNewVote(View view) {
@@ -200,20 +205,60 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
- /*   public  void displayAllWinners(int number, final ArrayList<Business> chosenArray){
+    public  void displayAllWinners(){
 
+        final ArrayList<String> stores = new ArrayList<>();
+        final ArrayList<String> storesURL = new ArrayList<>();
+        final ArrayList<String> address = new ArrayList<>();
+
+        for(int i=0; i<allWinners.size(); i++){
+            stores.add(allWinners.get(i).getName());
+            storesURL.add(allWinners.get(i).getImageUrl());
+            address.add((allWinners.get(i).getLocation().getAddress1() + ", " + allWinners.get(i).getLocation().getCity()
+                    + ", " + allWinners.get(i).getLocation().getState() + " " + allWinners.get(i).getLocation().getZipCode()));
+            Log.v("IS THIS CORRECT?: ", storesURL.get(i));
+        }
+
+        CustomListAdapter adapter = new CustomListAdapter(this, stores, storesURL, address);
+
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // TODO Auto-generated method stub
+                if(stores !=null) {
+                    String Slecteditem = stores.get(+position);
+                    Toast.makeText(getApplicationContext(), Slecteditem, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        list.setVisibility(View.VISIBLE);
+        mRatingStar.setVisibility(View.GONE);
+        mRestName.setVisibility(View.GONE);
+        mTryAgain.setVisibility(View.GONE);
+        mOtherWinners.setVisibility(View.GONE);
+        mPrice.setVisibility(View.GONE);
+        mRating.setVisibility(View.GONE);
+        mimage.setVisibility(View.GONE);
+        mDistance.setVisibility(View.GONE);
+        mLocation.setVisibility(View.GONE);
+        mWinner.setVisibility(View.GONE);
 
     }
-*/
     //this method is all about updating the screen by displaying the next restaurant and all of it's data.
     public void display(int number, final ArrayList<Business> chosenArray) {
 
         final Business business = chosenArray.get(number);
         new DownloadImageTask((ImageView) findViewById(R.id.main_image))
-                .execute(chosenArray.get(number).getImageUrl());
+                .execute(business.getImageUrl());
 
         new DownloadImageTask((ImageView) findViewById(R.id.main_background))
-                .execute(chosenArray.get(number).getImageUrl());
+                .execute(business.getImageUrl());
 
         ImageView img = (ImageView) findViewById(R.id.main_image);
         img.setOnClickListener(new View.OnClickListener() {
