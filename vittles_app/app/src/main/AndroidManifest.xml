@@ -32,12 +32,14 @@
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.Trans"/>
-        <activity android:name=".FilterActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".ModeSelectionActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.Trans" />
+        <activity
+            android:name=".FilterActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ModeSelectionActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity android:name=".GroupActivity"></activity>
     </application>
 
 </manifest>
