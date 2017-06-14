@@ -20,14 +20,17 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private final Activity context;
     private final ArrayList<String>   bName;
     private final ArrayList<String> imgUrl;
+    private final ArrayList<String> address;
 
-    public CustomListAdapter(Activity context, ArrayList<String> bName, ArrayList<String> imgUrl){
+    public CustomListAdapter(Activity context, ArrayList<String> bName, ArrayList<String> imgUrl,
+                             ArrayList<String> address){
         super(context, R.layout.mylist, bName);
         // TODO Auto-generated constructor stub
 
         this.context=context;
         this.bName=bName;
         this.imgUrl=imgUrl;
+        this.address = address;
     }
 
     public View getView(int position,View view,ViewGroup parent) {
@@ -36,15 +39,16 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
         TextView txtTitle = (TextView) rowView.findViewById(R.id.item);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+        TextView addressLine = (TextView) rowView.findViewById(R.id.textView1);
 
         new DownloadImageTask((ImageView) rowView.findViewById(R.id.icon))
                 .execute(imgUrl.get(position));
 
 
-        TextView extratxt = (TextView) rowView.findViewById(R.id.textView1);
+
 
         txtTitle.setText(bName.get(position));
-        extratxt.setText("Description "+ bName.get(position));
+        addressLine.setText(address.get(position));
         return rowView;
 
     };

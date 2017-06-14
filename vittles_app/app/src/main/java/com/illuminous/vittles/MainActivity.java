@@ -50,11 +50,14 @@ import static android.R.attr.y;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static android.media.CamcorderProfile.get;
 import static android.text.TextUtils.concat;
+import static com.illuminous.vittles.R.id.rating_star;
+import static com.illuminous.vittles.R.id.rest_winner;
 
 
-public class MainActivity extends AppCompatActivity {
+ public class MainActivity extends AppCompatActivity {
     YelpFusionApiFactory apiFactory;    //yelp api github class
     ImageView mimage;   //declaration of the restaurant image view
+     ImageView mRatingStar;
     TextView mRestName; //declaration of restaurant name text view
     TextView mPrice;    //restaurant price text view
     TextView mRating;   //restaurant rating text view
@@ -90,12 +93,13 @@ public class MainActivity extends AppCompatActivity {
         mimage = (ImageView) findViewById(R.id.main_image);
         mDistance = (TextView) findViewById(R.id.rest_distance);
         mLocation = (TextView) findViewById(R.id.rest_location);
-        mWinner = (TextView) findViewById(R.id.rest_winner);
+        mWinner = (TextView) findViewById(rest_winner);
         mForkYeah = (Button) findViewById(R.id.button_fork_yeah);
         mEww = (Button) findViewById(R.id.button_eww);
         mTryAgain = (Button) findViewById(R.id.try_again);
         mStartNewVote = (Button) findViewById(R.id.start_new_vote);
         mOtherWinners = (Button) findViewById(R.id.other_winners);
+        mRatingStar = (ImageView) findViewById(R.id.rating_star);
         list=(ListView)findViewById(R.id.list);
 
 
@@ -205,20 +209,17 @@ public class MainActivity extends AppCompatActivity {
 
         final ArrayList<String> stores = new ArrayList<>();
         final ArrayList<String> storesURL = new ArrayList<>();
-
-        Log.v("GOT INTO: ", "METHOD");
-        for(int i=0; i<allWinners.size(); i++){
-
-            Log.d("My Stores: ", allWinners.get(i).getName());
-        }
+        final ArrayList<String> address = new ArrayList<>();
 
         for(int i=0; i<allWinners.size(); i++){
             stores.add(allWinners.get(i).getName());
             storesURL.add(allWinners.get(i).getImageUrl());
+            address.add((allWinners.get(i).getLocation().getAddress1() + ", " + allWinners.get(i).getLocation().getCity()
+                    + ", " + allWinners.get(i).getLocation().getState() + " " + allWinners.get(i).getLocation().getZipCode()));
             Log.v("IS THIS CORRECT?: ", storesURL.get(i));
         }
 
-        CustomListAdapter adapter = new CustomListAdapter(this, stores, storesURL);
+        CustomListAdapter adapter = new CustomListAdapter(this, stores, storesURL, address);
 
         list.setAdapter(adapter);
 
@@ -237,6 +238,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         list.setVisibility(View.VISIBLE);
+        mRatingStar.setVisibility(View.GONE);
+        mRestName.setVisibility(View.GONE);
+        mTryAgain.setVisibility(View.GONE);
+        mOtherWinners.setVisibility(View.GONE);
+        mPrice.setVisibility(View.GONE);
+        mRating.setVisibility(View.GONE);
+        mimage.setVisibility(View.GONE);
+        mDistance.setVisibility(View.GONE);
+        mLocation.setVisibility(View.GONE);
+        mWinner.setVisibility(View.GONE);
+
     }
     //this method is all about updating the screen by displaying the next restaurant and all of it's data.
     public void display(int number, final ArrayList<Business> chosenArray) {
