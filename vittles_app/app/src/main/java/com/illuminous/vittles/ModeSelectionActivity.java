@@ -25,4 +25,10 @@ public class ModeSelectionActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FilterActivity.class);
         startActivity(intent);
     }
+
+    public void groupSelection(View view) {
+        Intent intent = new Intent(this, GroupActivity.class);
+        startActivity(intent);
+    }
+
 }

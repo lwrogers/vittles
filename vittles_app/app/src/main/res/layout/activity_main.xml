@@ -179,7 +179,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_button_green"
                 android:onClick="otherWinners"
-                android:text="Other Winers"
+                android:text="Other Winners"
                 android:textColor="@color/white"
                 android:visibility="gone"/>
 
@@ -189,6 +189,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="24dp"
                 android:layout_marginRight="24dp"
+                android:layout_marginLeft="24dp"
                 android:layout_weight="1"
                 android:onClick="startNewVote"
                 android:text="Start new vote"

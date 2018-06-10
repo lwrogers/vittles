@@ -39,7 +39,10 @@
         <activity
             android:name=".ModeSelectionActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity android:name=".GroupActivity"></activity>
+        <activity android:name=".GroupActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

@@ -122,7 +122,7 @@ import static com.illuminous.vittles.R.id.rest_winner;
         apiFactory = new YelpFusionApiFactory();    // Used this github directory for easier implementation of yelp at https://github.com/ranga543/yelp-fusion-android.
 
         try {   //set up a try catch to catch IO exceptions
-            YelpFusionApi yelpFusionApi = apiFactory.createAPI("0x2eOuAzs_QARDOGy6UFpw", "lCQaEU3PrlJcCkWS3HS4QHREdRZSY9I6TleyVwFhwV3tf5kW154TSR3CYZSF2qVI");  //accessed yelp api by entering our yelp ID and yelp secret
+            YelpFusionApi yelpFusionApi = apiFactory.createAPI("4ssjviufzVDACn2zOIK0vW4U4tSjulMMHlZLWree3390ZxtMsiFKPS5IOxpws2_7FsAqalgFChlPyI6RxGfZxrRduTmpPhV1eXr2day6ziKgEL85qSjJfAopxzz5WnYx");  //accessed yelp api by entering our yelp ID and yelp secret //lCQaEU3PrlJcCkWS3HS4QHREdRZSY9I6TleyVwFhwV3tf5kW154TSR3CYZSF2qVI
 
             Map<String, String> params = new HashMap<>();   //create a hashmap since the api takes in a hashmap of parameters
             params.put("term", kword);  //first parameter is a keyword which we transferred from the user input in filter activity
@@ -130,8 +130,12 @@ import static com.illuminous.vittles.R.id.rest_winner;
             params.put("location", location);   //third is your location which we transferred from the user input in filter activity
             params.put("open_now", openNow);
 
-            Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);    //here we prep the call
-            SearchResponse searchResponse = call.execute().body();  // generate a search response by executing the call and returning the body
+            //Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);    //here we prep the call
+            //SearchResponse searchResponse = call.execute().body();  // generate a search response by executing the call and returning the body
+            //Response<SearchResponse> response = call.execute();
+
+            Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);
+            SearchResponse searchResponse = call.execute().body();
 
             businesses = searchResponse.getBusinesses();    //initialize businesses array list and have it get the businesses from the search response
             winners = new ArrayList<>();    //initialize winners to be an array list

@@ -37,7 +37,8 @@
         android:textColor="@color/white"
         android:padding="24dp"
         android:fontFamily="cursive"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:onClick="groupSelection"/>
 
     <Button
         android:id="@+id/button_loner"
