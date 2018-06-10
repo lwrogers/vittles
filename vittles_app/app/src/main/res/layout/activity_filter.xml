@@ -44,7 +44,7 @@
         android:id="@+id/edit_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="location"
+        android:hint="My Current Location"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:layout_marginTop="48dp"
@@ -61,12 +61,22 @@
         android:hint="radius"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
-        android:layout_marginTop="48dp"
-        android:layout_below="@id/edit_location"
-        android:background="@drawable/edit_transparent"
-        android:padding="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"/>
+        android:background="@drawable/edit_transparent"/>
+        <!--android:layout_marginTop="48dp"-->
+        <!--android:layout_below="@id/edit_location"-->
+        <!--android:padding="16dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"/>-->
+
+    <NumberPicker
+        android:id="@+id/number_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="92dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="112dp"
+        android:layout_marginStart="107dp"
+        android:padding="16dp" />
 
     <!--<Button-->
         <!--android:layout_width="wrap_content"-->
@@ -110,6 +120,15 @@
         android:padding="8dp"
         android:onClick="openNowSwitch"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="61dp"
+        android:layout_height="39dp"
+        android:layout_alignBottom="@+id/number_picker"
+        android:layout_marginEnd="-107dp"
+        android:layout_toStartOf="@+id/number_picker"
+        android:text="TextView"
+        tools:text="Radius" />
 
 
 </RelativeLayout>

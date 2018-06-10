@@ -1,5 +1,7 @@
  package com.illuminous.vittles;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +9,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.location.Location;
+import android.location.LocationManager;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -36,6 +41,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.logging.Filter;
@@ -75,6 +81,9 @@ import static com.illuminous.vittles.R.id.rest_winner;
     ArrayList<Business> businesses; // an array list declaration for the businesses array list
     ArrayList<Business> winners;    // an array list declaration for the winners array list
     ArrayList<Business> allWinners;
+    //String longitude;
+    //String latitude;
+
 
 
 
@@ -103,13 +112,31 @@ import static com.illuminous.vittles.R.id.rest_winner;
         list=(ListView)findViewById(R.id.list);
 
 
-
-
+//        ActivityCompat.requestPermissions(this,
+//                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                99);
+//
+//        // A reference to the location manager. The LocationManager has already
+//        // been set up in MyService, we're just getting a reference here.
+//        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        List<String> providers = lm.getProviders(true);
+//        Location l;
+//        // Go through the location providers starting with GPS, stop as soon
+//        // as we find one.
+//        for (int i = providers.size() - 1; i >= 0; i--) {
+//            //checkPermission();
+//            l = lm.getLastKnownLocation(providers.get(i));
+//            longitude = (String.format("%.6f", (l.getLongitude())));
+//            latitude = (String.format("%.6f", (l.getLatitude())));
+//            if (l != null) break;
+//        }
 
         // preceding code here transfers the user inputed keyword, location, and radius variables from our previous filter activity
         Bundle extras = getIntent().getExtras();
         String kword = extras.getString("keyword");
         String location = extras.getString("location");
+        String longitude = extras.getString("longitude");
+        String latitude = extras.getString("latitude");
         String openNow = extras.getString("openNow");
         String radius = extras.getString("radius");
         String radiusString = "";
@@ -123,12 +150,24 @@ import static com.illuminous.vittles.R.id.rest_winner;
 
         try {   //set up a try catch to catch IO exceptions
             YelpFusionApi yelpFusionApi = apiFactory.createAPI("4ssjviufzVDACn2zOIK0vW4U4tSjulMMHlZLWree3390ZxtMsiFKPS5IOxpws2_7FsAqalgFChlPyI6RxGfZxrRduTmpPhV1eXr2day6ziKgEL85qSjJfAopxzz5WnYx");  //accessed yelp api by entering our yelp ID and yelp secret //lCQaEU3PrlJcCkWS3HS4QHREdRZSY9I6TleyVwFhwV3tf5kW154TSR3CYZSF2qVI
-
             Map<String, String> params = new HashMap<>();   //create a hashmap since the api takes in a hashmap of parameters
-            params.put("term", kword);  //first parameter is a keyword which we transferred from the user input in filter activity
-            params.put("radius", radiusString); //second is radius which we transferred from the user input in filter activity
-            params.put("location", location);   //third is your location which we transferred from the user input in filter activity
-            params.put("open_now", openNow);
+            if (location.equals("none")) {
+                Log.v("button", "Longitude is" + longitude);
+                //Map<String, String> params = new HashMap<>();   //create a hashmap since the api takes in a hashmap of parameters
+                params.put("term", kword);  //first parameter is a keyword which we transferred from the user input in filter activity
+                params.put("radius", radiusString); //second is radius which we transferred from the user input in filter activity
+                //params.put("location", location);   //third is your location which we transferred from the user input in filter activity
+                params.put("longitude", longitude);
+                params.put("latitude", latitude);
+                params.put("open_now", openNow);
+            } else {
+                Log.v("button", "Location is" + location);
+                //Map<String, String> params = new HashMap<>();   //create a hashmap since the api takes in a hashmap of parameters
+                params.put("term", kword);  //first parameter is a keyword which we transferred from the user input in filter activity
+                params.put("radius", radiusString); //second is radius which we transferred from the user input in filter activity
+                params.put("location", location);   //third is your location which we transferred from the user input in filter activity
+                params.put("open_now", openNow);
+            }
 
             //Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);    //here we prep the call
             //SearchResponse searchResponse = call.execute().body();  // generate a search response by executing the call and returning the body
