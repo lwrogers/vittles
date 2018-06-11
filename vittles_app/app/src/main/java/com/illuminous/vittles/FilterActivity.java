@@ -18,17 +18,26 @@ import android.location.LocationManager;
 import android.widget.NumberPicker;
 import java.util.List;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class FilterActivity extends AppCompatActivity {
     //editviews to get user input for parameters for the yelp call
     EditText mKeyword;
     EditText mLocation;
-    EditText mRadius;
+    //EditText mRadius;
     NumberPicker mNumberPicker;
     Button mOpenNow;
     String openNow;
     String longitude;
     String latitude;
     String radius;
+    String groupName;
+    Boolean groupMode;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +47,18 @@ public class FilterActivity extends AppCompatActivity {
         //set the variables to the view in the layout
         mKeyword = (EditText) findViewById(R.id.edit_keyword);
         mLocation = (EditText) findViewById(R.id.edit_location);
-        mRadius = (EditText) findViewById(R.id.edit_radius);
+        //mRadius = (EditText) findViewById(R.id.edit_radius);
         mNumberPicker = (NumberPicker) findViewById(R.id.number_picker);
         mNumberPicker.setMinValue(1);
-        mNumberPicker.setMaxValue(99);
+        mNumberPicker.setMaxValue(50);
         mOpenNow = (Button) findViewById(R.id.button_open_now);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
         openNow = "true";
         radius = "0";
+        Bundle extras = getIntent().getExtras();
+        groupName = extras.getString("groupName");
+        groupMode = extras.getBoolean("groupMode");
 
         mNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -75,12 +89,22 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void searchFood(View view) {
-        if(TextUtils.isEmpty(mKeyword.getText().toString()) || /*TextUtils.isEmpty(mLocation.getText().toString()) ||*/ TextUtils.isEmpty(mRadius.getText().toString())) {
-            Toast.makeText(this, "Please fill out all parameters.", Toast.LENGTH_SHORT).show();     //if any of the edit views is left empty we pop up a toast to notify the user that they must fill all fields.
-        } else  if(TextUtils.isEmpty(mLocation.getText().toString()) ) {
+        //if(TextUtils.isEmpty(mKeyword.getText().toString())/*TextUtils.isEmpty(mLocation.getText().toString()) || TextUtils.isEmpty(mRadius.getText().toString())*/) {
+            //Toast.makeText(this, "Please fill out all parameters.", Toast.LENGTH_SHORT).show();     //if any of the edit views is left empty we pop up a toast to notify the user that they must fill all fields.
+        /*} else  */
+        if(TextUtils.isEmpty(mLocation.getText().toString()) ) {
             String keyword = mKeyword.getText().toString();
             //String radius = mRadius.getText().toString();
             String location = "none";
+            if (groupMode) {
+                mDatabase.child(groupName).child("keyword").setValue(keyword);
+                mDatabase.child(groupName).child("longitude").setValue(longitude);
+                mDatabase.child(groupName).child("latitude").setValue(latitude);
+                mDatabase.child(groupName).child("radius").setValue(radius);
+                mDatabase.child(groupName).child("openNow").setValue(openNow);
+                mDatabase.child(groupName).child("location").setValue(location);
+            }
+
             Intent intent = new Intent(this, MainActivity.class);
             Bundle extras = new Bundle();
             extras.putString("keyword",keyword);
@@ -89,6 +113,8 @@ public class FilterActivity extends AppCompatActivity {
             extras.putString("radius",radius);
             extras.putString("openNow", openNow);
             extras.putString("location", location);
+            extras.putBoolean("groupMode", groupMode);
+            extras.putString("groupName", groupName);
             intent.putExtras(extras);
             startActivity(intent);
         } else {
@@ -97,6 +123,14 @@ public class FilterActivity extends AppCompatActivity {
             String location = mLocation.getText().toString();
             //String radius = mRadius.getText().toString();
 
+            if (groupMode) {
+                mDatabase.child(groupName).child("keyword").setValue(keyword);
+                mDatabase.child(groupName).child("longitude").setValue(longitude);
+                mDatabase.child(groupName).child("latitude").setValue(latitude);
+                mDatabase.child(groupName).child("radius").setValue(radius);
+                mDatabase.child(groupName).child("openNow").setValue(openNow);
+                mDatabase.child(groupName).child("location").setValue(location);
+            }
 
             //below code transfers the user inputed variables from this activity to the main activity.
             Intent intent = new Intent(this, MainActivity.class);
@@ -107,6 +141,8 @@ public class FilterActivity extends AppCompatActivity {
             extras.putString("latitude", latitude);
             extras.putString("radius",radius);
             extras.putString("openNow", openNow);
+            extras.putBoolean("groupMode", groupMode);
+            extras.putString("groupName", groupName);
             intent.putExtras(extras);
             startActivity(intent);
         }

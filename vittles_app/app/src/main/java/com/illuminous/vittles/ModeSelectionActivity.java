@@ -23,6 +23,10 @@ public class ModeSelectionActivity extends AppCompatActivity {
 
     public void lonerSelection(View view) {
         Intent intent = new Intent(this, FilterActivity.class);
+        Bundle extras = new Bundle();
+        extras.putBoolean("groupMode",false);
+        extras.putString("groupName", "");
+        intent.putExtras(extras);
         startActivity(intent);
     }
 

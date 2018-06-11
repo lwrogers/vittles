@@ -20,6 +20,7 @@
         tools:context="com.illuminous.vittles.MainActivity">
 
         <LinearLayout
+            android:id="@+id/white_box"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="24dp"
@@ -33,19 +34,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:visibility="gone" >
-            </ListView>
+                android:visibility="gone"></ListView>
 
             <TextView
                 android:id="@+id/rest_winner"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:text="WINNER"
-                android:textColor="@color/green"
+                android:textColor="@color/white"
                 android:textSize="32sp"
-                android:visibility="gone"
-                android:layout_gravity="center_horizontal"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/rest_name"
@@ -166,7 +166,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/round_button_sky"
                 android:onClick="tryAgain"
-                android:text="Trey again?"
+                android:text="Tray again?"
                 android:textColor="@color/white"
                 android:visibility="gone" />
             <Button

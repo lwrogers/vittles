@@ -1,134 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.illuminous.vittles.FilterActivity"
+    android:background="@color/black"
     android:orientation="vertical"
-    android:background="@color/black">
+    tools:context="com.illuminous.vittles.FilterActivity">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
         android:src="@mipmap/rest2"
-        android:scaleType="centerCrop" />
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/text_search_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="Search By: "
-        android:textSize="50sp"
-        android:layout_marginTop="64dp"
-        android:textColor="@color/white"
+        android:layout_marginTop="35dp"
         android:fontFamily="cursive"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"/>
+        android:text="Search By: "
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/edit_keyword"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="keyword"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:layout_marginTop="48dp"
-        android:layout_below="@id/text_search_by"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="140dp"
         android:background="@drawable/edit_transparent"
+        android:hint="keyword"
         android:padding="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"/>
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<EditText-->
+    <!--android:id="@+id/edit_radius"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:hint="radius"-->
+    <!--android:textColorHint="@color/white"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:background="@drawable/edit_transparent"/>-->
+    <!--android:layout_marginTop="48dp"-->
+    <!--android:layout_below="@id/edit_location"-->
+    <!--android:padding="16dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:layout_marginRight="8dp"/>-->
 
     <EditText
         android:id="@+id/edit_location"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/edit_transparent"
         android:hint="My Current Location"
-        android:textColorHint="@color/white"
+        android:padding="16dp"
         android:textColor="@color/white"
-        android:layout_marginTop="48dp"
-        android:layout_below="@id/edit_keyword"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_keyword" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:background="@drawable/edit_transparent"
         android:padding="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"/>
-
-    <EditText
-        android:id="@+id/edit_radius"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="radius"
-        android:textColorHint="@color/white"
+        android:text="Radius                               mi"
         android:textColor="@color/white"
-        android:background="@drawable/edit_transparent"/>
-        <!--android:layout_marginTop="48dp"-->
-        <!--android:layout_below="@id/edit_location"-->
-        <!--android:padding="16dp"-->
-        <!--android:layout_marginLeft="8dp"-->
-        <!--android:layout_marginRight="8dp"/>-->
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/number_picker" />
 
     <NumberPicker
         android:id="@+id/number_picker"
         android:layout_width="wrap_content"
-        android:layout_height="92dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="112dp"
-        android:layout_marginStart="107dp"
-        android:padding="16dp" />
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:elevation="2dp"
+        android:scaleX="2.5"
+        android:scaleY="2.5"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/edit_location" />
 
     <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:background="@drawable/button_search_transparent"-->
-        <!--android:text="search"-->
-        <!--android:textAllCaps="false"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginBottom="64dp"-->
-        <!--android:textSize="32sp"-->
-        <!--android:padding="8dp"-->
-        <!--android:onClick="searchFood"/>-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:background="@drawable/button_search_transparent"-->
+    <!--android:text="search"-->
+    <!--android:textAllCaps="false"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginBottom="64dp"-->
+    <!--android:textSize="32sp"-->
+    <!--android:padding="8dp"-->
+    <!--android:onClick="searchFood"/>-->
 
     <ImageView
         android:id="@+id/button_search"
-        android:layout_width="128dp"
-        android:layout_height="64dp"
-        android:src="@drawable/searchicon"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        android:padding="8dp"
+        android:layout_width="134dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="11dp"
         android:background="@drawable/button_search_transparent"
-        android:onClick="searchFood"/>
+        android:onClick="searchFood"
+        android:padding="8dp"
+        android:src="@drawable/searchicon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_open_now"
+        app:layout_constraintVertical_bias="0.518" />
 
     <Button
         android:id="@+id/button_open_now"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/green"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/green_transparent"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:text="Open Now"
-        android:layout_below="@id/edit_radius"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="8dp"
-        android:layout_centerHorizontal="true"
+        android:onClick="openNowSwitch"
         android:padding="8dp"
-        android:onClick="openNowSwitch"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="61dp"
-        android:layout_height="39dp"
-        android:layout_alignBottom="@+id/number_picker"
-        android:layout_marginEnd="-107dp"
-        android:layout_toStartOf="@+id/number_picker"
-        android:text="TextView"
-        tools:text="Radius" />
+        android:text="Open Now"
+        android:textColor="@color/green"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/button_search"
+        app:layout_constraintStart_toStartOf="@+id/button_search"
+        app:layout_constraintTop_toBottomOf="@+id/number_picker" />
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

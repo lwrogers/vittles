@@ -19,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,11 @@ import java.util.logging.Filter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.R.attr.buttonStyleInset;
 import static android.R.attr.radius;
@@ -64,6 +70,7 @@ import static com.illuminous.vittles.R.id.rest_winner;
     YelpFusionApiFactory apiFactory;    //yelp api github class
     ImageView mimage;   //declaration of the restaurant image view
      ImageView mRatingStar;
+     LinearLayout mWhiteBox;
     TextView mRestName; //declaration of restaurant name text view
     TextView mPrice;    //restaurant price text view
     TextView mRating;   //restaurant rating text view
@@ -81,6 +88,14 @@ import static com.illuminous.vittles.R.id.rest_winner;
     ArrayList<Business> businesses; // an array list declaration for the businesses array list
     ArrayList<Business> winners;    // an array list declaration for the winners array list
     ArrayList<Business> allWinners;
+    private DatabaseReference mDatabase;
+    String groupName;
+    boolean groupMode;
+    int count;
+    String countstr;
+    int max = 0;
+    int current;
+    int maxIndex = 10;
     //String longitude;
     //String latitude;
 
@@ -103,6 +118,7 @@ import static com.illuminous.vittles.R.id.rest_winner;
         mDistance = (TextView) findViewById(R.id.rest_distance);
         mLocation = (TextView) findViewById(R.id.rest_location);
         mWinner = (TextView) findViewById(rest_winner);
+        mWhiteBox = (LinearLayout) findViewById(R.id.white_box);
         mForkYeah = (Button) findViewById(R.id.button_fork_yeah);
         mEww = (Button) findViewById(R.id.button_eww);
         mTryAgain = (Button) findViewById(R.id.try_again);
@@ -110,6 +126,8 @@ import static com.illuminous.vittles.R.id.rest_winner;
         mOtherWinners = (Button) findViewById(R.id.other_winners);
         mRatingStar = (ImageView) findViewById(R.id.rating_star);
         list=(ListView)findViewById(R.id.list);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
 
 
 //        ActivityCompat.requestPermissions(this,
@@ -139,6 +157,10 @@ import static com.illuminous.vittles.R.id.rest_winner;
         String latitude = extras.getString("latitude");
         String openNow = extras.getString("openNow");
         String radius = extras.getString("radius");
+        groupMode = extras.getBoolean("groupMode");
+        if (groupMode) {
+            groupName = extras.getString("groupName");
+        }
         String radiusString = "";
 
         if (radius != null) {
@@ -205,6 +227,26 @@ import static com.illuminous.vittles.R.id.rest_winner;
     public void submitYes(View view) {
         winners.add(businesses.get(businessIndex));
         allWinners.add(businesses.get(businessIndex));
+        if (groupMode) {
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.child(groupName).child("Voting Array").hasChild(Integer.toString(businessIndex))) {
+                        countstr = snapshot.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).getValue().toString();
+                        count = Integer.parseInt(countstr);
+                        count++;
+                        mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(count);
+                    } else {
+                        mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(1);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
         if (businessIndex != businesses.size() - 1) {
             businessIndex++;
             display(businessIndex, businesses);
@@ -217,6 +259,25 @@ import static com.illuminous.vittles.R.id.rest_winner;
     // this method is linked to the eww... button and advances in the businesses array as long as it hasn't reached the end. If it has it calls chooseWinner
     public void submitNo(View view) {
         if (businessIndex != businesses.size() - 1) {
+            if (groupMode) {
+                //mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(0);
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.child(groupName).child("Voting Array").hasChild(Integer.toString(businessIndex))) {
+
+                        } else {
+                            mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(0);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
             businessIndex++;
             display(businessIndex, businesses);
         } else {
@@ -245,6 +306,10 @@ import static com.illuminous.vittles.R.id.rest_winner;
     // This method simply starts a new intent to the filter activity in order to reset the vote and start over
     public void startNewVote(View view) {
         Intent intent = new Intent(this, FilterActivity.class);
+        Bundle extras = new Bundle();
+        extras.putString("groupName",groupName);
+        extras.putBoolean("groupMode",groupMode);
+        intent.putExtras(extras);
         startActivity(intent);
     }
 
@@ -323,20 +388,82 @@ import static com.illuminous.vittles.R.id.rest_winner;
 
     //This method chooses a winner randomly from the list of winners that the person accumulated by answering "fork yeah".
     public void chooseWinner() {
-        if (winners.size() < 1) {
-            startActivity(new Intent(this, FilterActivity.class));
+        if(groupMode) {
+            findMaxIndex();
+            Log.v("button", "maxIndexxxxxxxxxxxxxxxxxxxxxxxxxxxxx: " + maxIndex);
+
+//            display(maxIndex, businesses);
+//            mWhiteBox.setBackgroundResource(R.drawable.round_linear_winner);
+            mRestName.setTextColor(this.getResources().getColor(R.color.white));
+            mLocation.setTextColor(this.getResources().getColor(R.color.white));
+            mRating.setTextColor(this.getResources().getColor(R.color.white));
+//            mWinner.setVisibility(View.VISIBLE);
+//            mOtherWinners.setVisibility(View.VISIBLE);
+//            mEww.setVisibility(View.GONE);
+//            mForkYeah.setVisibility(View.GONE);
+//            mTryAgain.setVisibility(View.VISIBLE);
+//            mStartNewVote.setVisibility(View.VISIBLE);
+        } else if (winners.size() < 1) {
+            Intent intent = new Intent(this, FilterActivity.class);
+            Bundle extras = new Bundle();
+            extras.putString("groupName",groupName);
+            extras.putBoolean("groupMode",groupMode);
+            intent.putExtras(extras);
+            startActivity(intent);
             finish();
         } else {
             Random rand = new Random();
             winnerIndex = rand.nextInt(winners.size());
             display(winnerIndex, winners);
+            mWhiteBox.setBackgroundResource(R.drawable.round_linear_winner);
+            mRestName.setTextColor(this.getResources().getColor(R.color.white));
+            mLocation.setTextColor(this.getResources().getColor(R.color.white));
+            mRating.setTextColor(this.getResources().getColor(R.color.white));
             mWinner.setVisibility(View.VISIBLE);
             mOtherWinners.setVisibility(View.VISIBLE);
             mEww.setVisibility(View.GONE);
             mForkYeah.setVisibility(View.GONE);
             mTryAgain.setVisibility(View.VISIBLE);
             mStartNewVote.setVisibility(View.VISIBLE);
+
         }
+    }
+
+    public void findMaxIndex() {
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for(int i=0; i<businesses.size(); i++)
+                    if (snapshot.child(groupName).child("Voting Array").hasChild(Integer.toString(i))) {
+                        current = Integer.parseInt(snapshot.child(groupName).child("Voting Array").child(Integer.toString(i)).getValue().toString());
+                        Log.v("button", "current: " + current + "    max: " + max + "     maxIndex: " + maxIndex);
+
+                        if (current>max) {
+                            max = current;
+                            maxIndex = i;
+                            Log.v("button", "ifcurrent: " + current + "    ifmax: " + max + "     ifmaxIndex: " + maxIndex);
+
+                        if (i == businesses.size()-1)    ;
+                            display(maxIndex, businesses);
+                            mWhiteBox.setBackgroundResource(R.drawable.round_linear_winner);
+                            //mRestName.setTextColor(this.getResources().getColor(R.color.white));
+                            //mLocation.setTextColor(this.getResources().getColor(R.color.white));
+                            //mRating.setTextColor(this.getResources().getColor(R.color.white));
+                            mWinner.setVisibility(View.VISIBLE);
+                            mOtherWinners.setVisibility(View.VISIBLE);
+                            mEww.setVisibility(View.GONE);
+                            mForkYeah.setVisibility(View.GONE);
+                            mTryAgain.setVisibility(View.VISIBLE);
+                            mStartNewVote.setVisibility(View.VISIBLE);
+                        }
+                    }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     //round function from stack overflow

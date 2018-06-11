@@ -26,6 +26,8 @@ public class GroupActivity extends AppCompatActivity {
     String location;
     String openNow;
     String radius;
+    String longitude;
+    String latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,8 @@ public class GroupActivity extends AppCompatActivity {
                     location = snapshot.child(groupName).child("location").getValue().toString();
                     openNow = snapshot.child(groupName).child("openNow").getValue().toString();
                     radius = snapshot.child(groupName).child("radius").getValue().toString();
+                    longitude = snapshot.child(groupName).child("longitude").getValue().toString();
+                    latitude = snapshot.child(groupName).child("latitude").getValue().toString();
                     groupFound();
                 } else {
                     mDatabase.child(groupName).setValue(groupName);
@@ -80,6 +84,8 @@ public class GroupActivity extends AppCompatActivity {
         extras.putString("location",location);
         extras.putString("radius",radius);
         extras.putString("openNow", openNow);
+        extras.putString("latitude", latitude);
+        extras.putString("longitude", longitude);
         intent.putExtras(extras);
         startActivity(intent);
     }
