@@ -182,6 +182,7 @@ import static com.illuminous.vittles.R.id.rest_winner;
                 params.put("longitude", longitude);
                 params.put("latitude", latitude);
                 params.put("open_now", openNow);
+                params.put("limit", "20");
             } else {
                 Log.v("button", "Location is" + location);
                 //Map<String, String> params = new HashMap<>();   //create a hashmap since the api takes in a hashmap of parameters
@@ -189,6 +190,7 @@ import static com.illuminous.vittles.R.id.rest_winner;
                 params.put("radius", radiusString); //second is radius which we transferred from the user input in filter activity
                 params.put("location", location);   //third is your location which we transferred from the user input in filter activity
                 params.put("open_now", openNow);
+                params.put("limit", "20");
             }
 
             //Call<SearchResponse> call = yelpFusionApi.getBusinessSearch(params);    //here we prep the call
@@ -227,17 +229,42 @@ import static com.illuminous.vittles.R.id.rest_winner;
     public void submitYes(View view) {
         winners.add(businesses.get(businessIndex));
         allWinners.add(businesses.get(businessIndex));
+        Log.v("button", "businessIndex issssssssssssssssssssssss: " + businessIndex);
         if (groupMode) {
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     if (snapshot.child(groupName).child("Voting Array").hasChild(Integer.toString(businessIndex))) {
+                        Log.v("button", "businessIndex snapshottttttttttttttttttttttttttt: " + businessIndex);
                         countstr = snapshot.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).getValue().toString();
                         count = Integer.parseInt(countstr);
                         count++;
                         mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(count);
+                        if (businessIndex != businesses.size() - 1) {
+                            Log.v("button", "businessIndex right before increaseeeeeeeeeeeeeeeeeeeeeeeeeee: " + businessIndex);
+
+                            businessIndex++;
+                            display(businessIndex, businesses);
+                            Log.v("button", "businessIndex right after increaseeeeeeeeeeeeeeeeeeeeeeeeeee: " + businessIndex);
+
+                        } else {
+
+                            chooseWinner();
+                        }
                     } else {
+                        Log.v("button", "businessIndex snapshotelseeeeeeeeeeeeeeeeeeeee: " + businessIndex);
                         mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(1);
+                        if (businessIndex != businesses.size() - 1) {
+                            Log.v("button", "businessIndex right before increaseeeeeeeeeeeeeeeeeeeeeeeeeee: " + businessIndex);
+
+                            businessIndex++;
+                            display(businessIndex, businesses);
+                            Log.v("button", "businessIndex right after increaseeeeeeeeeeeeeeeeeeeeeeeeeee: " + businessIndex);
+
+                        } else {
+
+                            chooseWinner();
+                        }
                     }
                 }
 
@@ -247,27 +274,33 @@ import static com.illuminous.vittles.R.id.rest_winner;
                 }
             });
         }
-        if (businessIndex != businesses.size() - 1) {
-            businessIndex++;
-            display(businessIndex, businesses);
-        } else {
 
-            chooseWinner();
-        }
     }
 
     // this method is linked to the eww... button and advances in the businesses array as long as it hasn't reached the end. If it has it calls chooseWinner
     public void submitNo(View view) {
-        if (businessIndex != businesses.size() - 1) {
             if (groupMode) {
                 //mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(0);
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         if (snapshot.child(groupName).child("Voting Array").hasChild(Integer.toString(businessIndex))) {
+                            if (businessIndex != businesses.size() - 1) {
+                                businessIndex++;
+                                display(businessIndex, businesses);
+                            } else {
 
+                                chooseWinner();
+                            }
                         } else {
                             mDatabase.child(groupName).child("Voting Array").child(Integer.toString(businessIndex)).setValue(0);
+                            if (businessIndex != businesses.size() - 1) {
+                                businessIndex++;
+                                display(businessIndex, businesses);
+                            } else {
+
+                                chooseWinner();
+                            }
                         }
                     }
 
@@ -276,13 +309,7 @@ import static com.illuminous.vittles.R.id.rest_winner;
 
                     }
                 });
-
             }
-            businessIndex++;
-            display(businessIndex, businesses);
-        } else {
-            chooseWinner();
-        }
 
     }
     // This method calls choosewinner() as long as the size is greater than 1 and chooses another random winner from the array.
